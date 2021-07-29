@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "party";
+option java_outer_classname = "PresenceApi";
+option objc_class_prefix = "HLW";
+
+package party;
+
+service PresenceApiService {
+  rpc JoinParty (JoinPartyRequest) returns (JoinPartyReply) {}
+  rpc LeaveParty (LeavePartyRequest) returns (LeavePartyReply) {}
+  rpc Ping (PingRequest) returns (PingReply) {}
+  rpc ListenInOutEvent (ListenInOutEventRequest) returns (stream InOutEventReply) {}
+  rpc InOutEvent (InOutEventRequest) returns (InOutEventReply) {}
+}
+
+message JoinPartyRequest {
+  string partyId = 1;
+  string userId = 2;
+}
+message User {
+    string id = 1;
+    string name = 2;
+}
+message JoinPartyReply {
+  repeated User users = 1;
+}
+
+message LeavePartyRequest {
+  string partyId = 1;
+  string userId = 2;
+}
+message LeavePartyReply {
+}
+
+message PingRequest {
+  string partyId = 1;
+  string userId = 2;
+}
+message PingReply {
+}
+
+message ListenInOutEventRequest {
+  string partyId = 1;
+}
+message ListenInOutEventReply {
+}
+
+message InOutEventRequest {
+  string partyId = 1;
+  string userId = 2;
+  string type = 3;
+}
+message InOutEventReply {
+
+}
