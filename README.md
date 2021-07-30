@@ -28,6 +28,23 @@ This is the design:
 
 ![App layers](doc/diagram.png?raw=true "Service design")
 
+### Running
+
+1. run docker-compose:
+
+    docker-compose up
+    
+2. run app
+
+    ./gradlew run
+
+3. run tests
+
+    ./gradlew test
+
+
+### Pendings
+
 There are some TODOs that I couldn't end because of the timebox that I set myself (7 hours):
 
 - [ ] implement persistence w/micronaut data
