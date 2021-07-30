@@ -6,7 +6,7 @@ data class User(val id: String, val name: String)
 data class Party(val id: String, val name: String)
 data class UserInParty(val id: String?=null, val user: User, val party: Party)
 
-data class UserInPartyActivity(val partyId: String, val userId: String, val time:LocalDateTime)
+data class UserInPartyActivity(val id: String?=null, val partyId: String, val userId: String, val time:LocalDateTime)
 
 data class UserLeaveEvent(val user: User, val party: Party)
 data class UserInOutEvent(val user: User, val party: Party, val type:InOutType)

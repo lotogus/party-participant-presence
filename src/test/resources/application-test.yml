@@ -1,0 +1,10 @@
+---
+kafka:
+  embedded:
+    enabled: true
+    topics:
+      - user-out
+      - user-in
+  bootstrap:
+    servers: localhost:9092
+

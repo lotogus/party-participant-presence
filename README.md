@@ -16,10 +16,29 @@ A person leaves a party when:
 - Describe this backend service using diagrams.
 - Design the API using protobuf and build the grpc micronaut service.
 
-- Please submit system design   1 project.
+- Please submit system design 1 project.
 and a zip containing the micronaut
 
 
 ## Resolution
 
+I'm not sure if I should build all the service or only the grpc API only, but I've tried to build all the application end to end.
+
+This is the design:
+
 ![App layers](doc/diagram.png?raw=true "Service design")
+
+There are some TODOs that I couldn't end because of the timebox that I set myself (7 hours):
+
+- [ ] implement persistence w/micronaut data
+- [ ] add logging
+- [ ] add DDL w/flyway
+- [ ] add more unit testing for getting an acceptable coverage & utility
+- [ ] add integration tests
+- [ ] add Dockerfile & build it in docker-compose
+- [ ] add metrics (eg: with prometheus)
+- [ ] implement grpc client app
+- [ ] implement rest layer
+- [ ] add Security layer
+- [ ] abstract UserRepository into another API call
+- [ ] abstract PartyRepository into another API call

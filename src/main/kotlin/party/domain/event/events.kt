@@ -5,7 +5,6 @@ import party.domain.model.UserInParty
 import party.domain.model.UserLeaveEvent
 
 interface EventNotifier {
-    suspend fun notifyNewUser(userInParty: UserInParty)
-    suspend fun notifyUserLeave(userLeaveEvent: UserLeaveEvent)
-    suspend fun notifyInOutEvent(userInOutEvent: UserInOutEvent)
+    suspend fun notifyUserOut(userInOutEvent: UserInOutEvent)
+    suspend fun notifyUserIn(userInOutEvent: UserInOutEvent)
 }

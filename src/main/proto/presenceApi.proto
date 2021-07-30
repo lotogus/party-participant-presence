@@ -11,8 +11,7 @@ service PresenceApiService {
   rpc JoinParty (JoinPartyRequest) returns (JoinPartyReply) {}
   rpc LeaveParty (LeavePartyRequest) returns (LeavePartyReply) {}
   rpc Ping (PingRequest) returns (PingReply) {}
-  rpc ListenInOutEvent (ListenInOutEventRequest) returns (stream InOutEventReply) {}
-  rpc InOutEvent (InOutEventRequest) returns (InOutEventReply) {}
+  rpc ListenInOutEvent (ListenInOutEventRequest) returns (stream ListenInOutEventReply) {}
 }
 
 message JoinPartyRequest {
@@ -45,13 +44,7 @@ message ListenInOutEventRequest {
   string partyId = 1;
 }
 message ListenInOutEventReply {
-}
-
-message InOutEventRequest {
   string partyId = 1;
   string userId = 2;
   string type = 3;
-}
-message InOutEventReply {
-
 }

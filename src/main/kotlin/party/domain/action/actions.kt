@@ -20,8 +20,8 @@ class JoinPartyAction(
     suspend fun joinParty(partyId: String, userId: String): List<User> {
         val party = partyRepository.findById(partyId) ?: throw NotFoundError("partyId $partyId not found")
         val user = userRepository.findById(userId) ?: throw NotFoundError("userId $userId not found")
-        val userInParty = trackUserJoinToParty(party, user)
-        eventNotifier.notifyNewUser(userInParty)
+        trackUserJoinToParty(party, user)
+        eventNotifier.notifyUserIn(UserInOutEvent(user, party, InOutType.IN))
         return userInPartyRepository.findByPartyId(party.id).map { it.user }
     }
 
@@ -42,7 +42,7 @@ class LeavePartyAction(
     suspend fun leaveParty(partyId: String, userId: String) {
         val party = partyRepository.findById(partyId) ?: throw NotFoundError("partyId $partyId not found")
         val user = userRepository.findById(userId) ?: throw NotFoundError("userId $userId not found")
-        eventNotifier.notifyUserLeave(UserLeaveEvent(user, party))
+        eventNotifier.notifyUserOut(UserInOutEvent(user, party, InOutType.OUT))
     }
 
     suspend fun trackUserLeaveToParty(userLeaveEvent: UserLeaveEvent): UserInParty? {
@@ -60,7 +60,7 @@ class LeavePartyAction(
 @Singleton
 class InOutEventAction(private val eventNotifier: EventNotifier) {
     suspend fun notifyInOutEvent(userInOutEvent: UserInOutEvent) {
-        eventNotifier.notifyInOutEvent(userInOutEvent)
+        eventNotifier.notifyUserIn(userInOutEvent)
     }
 }
 
@@ -70,7 +70,12 @@ class PingAction(
     private val leavePartyAction: LeavePartyAction,
 ) {
     suspend fun ping(partyId: String, userId: String) {
-        userInPartyActivityRepository.save(UserInPartyActivity(partyId, userId, LocalDateTime.now()))
+        val userInPartyActivity = userInPartyActivityRepository.findByPartyIdAndUserId(partyId, userId)
+        if (userInPartyActivity != null) {
+            userInPartyActivityRepository.save(userInPartyActivity.copy(time = LocalDateTime.now()))
+        } else {
+            userInPartyActivityRepository.save(UserInPartyActivity(null, partyId, userId, LocalDateTime.now()))
+        }
     }
 
     suspend fun processImplicitUserPartyTimeout(partyId: String, userId: String) {
